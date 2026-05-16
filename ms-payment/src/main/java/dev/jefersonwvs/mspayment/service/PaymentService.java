@@ -40,7 +40,7 @@ public class PaymentService {
     paymentRepository.save(entity);
     logger.info("Payment approved: paymentId={}, orderId={}", entity.getId(), entity.getOrderId());
 
-    approvedPaymentProducer.publishApprovedPayment(new ApprovedPaymentEvent(UUID.randomUUID().toString(), entity.getId(), entity.getAmount(), request.processedAt()));
+    approvedPaymentProducer.publishApprovedPayment(new ApprovedPaymentEvent(UUID.randomUUID().toString(), entity.getOrderId(), entity.getId(), entity.getAmount(), request.processedAt()));
     logger.info("Published approved payment: paymentId={}, orderId={}", entity.getId(), entity.getOrderId());
   }
 }
