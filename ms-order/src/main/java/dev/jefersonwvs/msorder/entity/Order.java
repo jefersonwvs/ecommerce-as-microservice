@@ -1,6 +1,7 @@
 package dev.jefersonwvs.msorder.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -16,62 +17,71 @@ public class Order {
   @Column(nullable = false)
   private Long customerId;
 
-  @Column(nullable = false, precision = 10, scale = 2)
-  private BigDecimal amount;
+  @Column(nullable = false, precision = 12, scale = 2)
+  private BigDecimal totalAmount;
 
   @Enumerated(EnumType.STRING)
-  @Column(nullable = false)
+  @Column(nullable = false, length = 30)
   private OrderStatus status;
 
-  @Column(nullable = false)
+  @Column(nullable = false, updatable = false)
+  @CreationTimestamp
   private Instant createdAt;
 
-  protected Order() {}
+  @Column
+  @CreationTimestamp
+  private Instant updatedAt;
 
-  public Order(Long customerId, BigDecimal amount, OrderStatus status) {
+  protected Order() {
+    // JPA
+  }
+
+  public Order(Long customerId, BigDecimal totalAmount) {
     this.customerId = customerId;
-    this.amount = amount;
-    this.status = status;
+    this.totalAmount = totalAmount;
+    this.status = OrderStatus.CREATED;
     this.createdAt = Instant.now();
+  }
+
+  public void markAsPaid() {
+    this.status = OrderStatus.PAID;
+  }
+
+  public void cancel() {
+    this.status = OrderStatus.CANCELED;
   }
 
   public Long getId() {
     return id;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
   public Long getCustomerId() {
     return customerId;
   }
 
-  public void setCustomerId(Long customerId) {
-    this.customerId = customerId;
-  }
-
-  public BigDecimal getAmount() {
-    return amount;
-  }
-
-  public void setAmount(BigDecimal amount) {
-    this.amount = amount;
+  public BigDecimal getTotalAmount() {
+    return totalAmount;
   }
 
   public OrderStatus getStatus() {
     return status;
   }
 
-  public void setStatus(OrderStatus status) {
-    this.status = status;
-  }
-
   public Instant getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(Instant createdAt) {
-    this.createdAt = createdAt;
+  public Instant getUpdatedAt() {
+    return updatedAt;
+  }
+
+  @Override
+  public String toString() {
+    return "Order{" +
+      "id=" + id +
+      ", customerId=" + customerId +
+      ", totalAmount=" + totalAmount +
+      ", status=" + status +
+      '}';
   }
 }
