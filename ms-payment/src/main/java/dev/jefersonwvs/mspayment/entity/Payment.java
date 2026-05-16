@@ -2,6 +2,8 @@ package dev.jefersonwvs.mspayment.entity;
 
 import dev.jefersonwvs.mspayment.model.PaymentStatus;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -14,77 +16,74 @@ public class Payment {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false)
-  private Long customerId;
-
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private Long orderId;
 
-  @Column(nullable = false, precision = 10, scale = 2)
+  @Column(nullable = false, precision = 12, scale = 2)
   private BigDecimal amount;
 
   @Enumerated(EnumType.STRING)
-  @Column(nullable = false)
+  @Column(nullable = false, length = 30)
   private PaymentStatus status;
 
-  @Column(nullable = false)
+  @Column(nullable = false, updatable = false)
+  @CreationTimestamp
   private Instant createdAt;
 
-  protected Payment() {}
+  @Column
+  @UpdateTimestamp
+  private Instant updatedAt;
 
-  public Payment(Long customerId, Long orderId, BigDecimal amount, PaymentStatus status) {
-    this.customerId = customerId;
+  protected Payment() {
+    // JPA
+  }
+
+  public Payment(Long orderId, BigDecimal amount) {
     this.orderId = orderId;
     this.amount = amount;
-    this.status = status;
+    this.status = PaymentStatus.PENDING;
     this.createdAt = Instant.now();
+  }
+
+  public void approve() {
+    this.status = PaymentStatus.APPROVED;
+  }
+
+  public void reject() {
+    this.status = PaymentStatus.REJECTED;
   }
 
   public Long getId() {
     return id;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Long getCustomerId() {
-    return customerId;
-  }
-
-  public void setCustomerId(Long customerId) {
-    this.customerId = customerId;
-  }
-
   public Long getOrderId() {
     return orderId;
-  }
-
-  public void setOrderId(Long orderId) {
-    this.orderId = orderId;
   }
 
   public BigDecimal getAmount() {
     return amount;
   }
 
-  public void setAmount(BigDecimal amount) {
-    this.amount = amount;
-  }
-
   public PaymentStatus getStatus() {
     return status;
-  }
-
-  public void setStatus(PaymentStatus status) {
-    this.status = status;
   }
 
   public Instant getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(Instant createdAt) {
-    this.createdAt = createdAt;
+  public Instant getUpdatedAt() {
+    return updatedAt;
+  }
+
+  @Override
+  public String toString() {
+    return "Payment{" +
+      "id=" + id +
+      ", orderId=" + orderId +
+      ", totalAmount=" + amount +
+      ", status=" + status +
+      '}';
   }
 }

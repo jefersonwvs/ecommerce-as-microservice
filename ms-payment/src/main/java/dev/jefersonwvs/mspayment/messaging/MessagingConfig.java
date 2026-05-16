@@ -17,8 +17,8 @@ public class MessagingConfig {
   static final String ORDER_CREATED_QUEUE = "payment.order-created";
   static final String ORDER_CREATED_ROUTING_KEY = "order.created";
 
-  static final String PROCESSED_PAYMENT_QUEUE = "payment.processed-payment";
-  static final String PROCESSED_PAYMENT_ROUTING_KEY = "payment.processed";
+  static final String APPROVED_PAYMENT_QUEUE = "payment.approved-payment";
+  static final String APPROVED_PAYMENT_ROUTING_KEY = "payment.approved";
 
 
   @Bean
@@ -37,13 +37,13 @@ public class MessagingConfig {
   }
 
   @Bean
-  public Queue processedPaymentQueue() {
-    return new Queue(PROCESSED_PAYMENT_QUEUE);
+  public Queue approvedPaymentQueue() {
+    return new Queue(APPROVED_PAYMENT_QUEUE);
   }
 
   @Bean
-  public Binding processedPaymentBinding() {
-    return BindingBuilder.bind(processedPaymentQueue()).to(topicExchange()).with(PROCESSED_PAYMENT_ROUTING_KEY);
+  public Binding approvedPaymentBinding() {
+    return BindingBuilder.bind(approvedPaymentQueue()).to(topicExchange()).with(APPROVED_PAYMENT_ROUTING_KEY);
   }
 
   @Bean

@@ -1,11 +1,15 @@
 package dev.jefersonwvs.mspayment.messaging;
 
 import dev.jefersonwvs.mspayment.service.PaymentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OrderCreatedConsumer {
+
+  private static final Logger logger = LoggerFactory.getLogger(OrderCreatedConsumer.class);
 
   private final PaymentService paymentService;
 
@@ -15,10 +19,9 @@ public class OrderCreatedConsumer {
 
   @RabbitListener(queues = "payment.order-created")
   public void consume(OrderCreatedEvent event) {
-    System.out.println("Order Created Event: " + event);
-    System.out.println("Order ID: " + event.orderId());
-
-    paymentService.createPendingPayment(event);
+    logger.info("Received order-created event: orderId={}", event.orderId());
+    var payment = paymentService.createPendingPayment(event);
+    logger.info("Payment created: paymentId={}, orderId={}", payment.getId(), event.orderId());
   }
 
 }

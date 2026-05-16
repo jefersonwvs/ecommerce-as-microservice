@@ -1,15 +1,12 @@
 package dev.jefersonwvs.mspayment.messaging;
 
-import dev.jefersonwvs.mspayment.model.PaymentStatus;
-
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public record ProcessedPaymentEvent(
+public record ApprovedPaymentEvent(
   String eventId,
   Long paymentId,
   BigDecimal amount,
-  PaymentStatus status,
   Instant occurredAt
 ) {
 }

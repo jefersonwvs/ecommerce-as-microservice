@@ -2,11 +2,12 @@ package dev.jefersonwvs.mspayment.service;
 
 import dev.jefersonwvs.mspayment.dto.PaymentWebhookRequest;
 import dev.jefersonwvs.mspayment.entity.Payment;
+import dev.jefersonwvs.mspayment.messaging.ApprovedPaymentEvent;
+import dev.jefersonwvs.mspayment.messaging.ApprovedPaymentProducer;
 import dev.jefersonwvs.mspayment.messaging.OrderCreatedEvent;
-import dev.jefersonwvs.mspayment.messaging.ProcessedPaymentEvent;
-import dev.jefersonwvs.mspayment.messaging.ProcessedPaymentProducer;
-import dev.jefersonwvs.mspayment.model.PaymentStatus;
 import dev.jefersonwvs.mspayment.repository.PaymentRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,26 +16,31 @@ import java.util.UUID;
 @Service
 public class PaymentService {
 
-  private final PaymentRepository paymentRepository;
-  private final ProcessedPaymentProducer processedPaymentProducer;
+  private static final Logger logger = LoggerFactory.getLogger(PaymentService.class);
 
-  public PaymentService(PaymentRepository paymentRepository, ProcessedPaymentProducer processedPaymentProducer) {
+  private final PaymentRepository paymentRepository;
+  private final ApprovedPaymentProducer approvedPaymentProducer;
+
+  public PaymentService(PaymentRepository paymentRepository, ApprovedPaymentProducer approvedPaymentProducer) {
     this.paymentRepository = paymentRepository;
-    this.processedPaymentProducer = processedPaymentProducer;
+    this.approvedPaymentProducer = approvedPaymentProducer;
   }
 
   @Transactional
-  public void createPendingPayment(OrderCreatedEvent event) {
-    paymentRepository.save(new Payment(event.customerId(), event.orderId(), event.amount(), PaymentStatus.PENDING));
+  public Payment createPendingPayment(OrderCreatedEvent event) {
+    var entity = new Payment(event.orderId(), event.totalAmount());
+    paymentRepository.save(entity);
+    return entity;
   }
 
   @Transactional
   public void approvePayment(PaymentWebhookRequest request) {
     var entity = paymentRepository.findById(request.paymentId()).orElseThrow(() -> new RuntimeException("Pagamento não encontrado."));
-    entity.setStatus(PaymentStatus.APPROVED);
+    entity.approve();
     paymentRepository.save(entity);
+    logger.info("Payment approved: paymentId={}, orderId={}", entity.getId(), entity.getOrderId());
 
-    processedPaymentProducer.publishPendingPayment(new ProcessedPaymentEvent(UUID.randomUUID().toString(), entity.getId(), entity.getAmount(), entity.getStatus(), request.processedAt()));
-
+    approvedPaymentProducer.publishApprovedPayment(new ApprovedPaymentEvent(UUID.randomUUID().toString(), entity.getId(), entity.getAmount(), request.processedAt()));
+    logger.info("Published approved payment: paymentId={}, orderId={}", entity.getId(), entity.getOrderId());
   }
 }
