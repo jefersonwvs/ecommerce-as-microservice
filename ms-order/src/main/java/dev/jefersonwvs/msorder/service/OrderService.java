@@ -3,7 +3,7 @@ package dev.jefersonwvs.msorder.service;
 import dev.jefersonwvs.msorder.dto.CreateOrderRequest;
 import dev.jefersonwvs.msorder.dto.OrderResponse;
 import dev.jefersonwvs.msorder.entity.Order;
-import dev.jefersonwvs.msorder.messaging.ApprovedPaymentEvent;
+import dev.jefersonwvs.msorder.messaging.PaymentApprovedEvent;
 import dev.jefersonwvs.msorder.messaging.OrderCreatedEvent;
 import dev.jefersonwvs.msorder.messaging.OrderEventProducer;
 import dev.jefersonwvs.msorder.repository.OrderRepository;
@@ -58,7 +58,7 @@ public class OrderService {
   }
 
   @Transactional
-  public OrderResponse approveOrderPayment(ApprovedPaymentEvent event) {
+  public OrderResponse approveOrderPayment(PaymentApprovedEvent event) {
     var order = orderRepository.findById(event.orderId()).orElseThrow(() -> new RuntimeException("Pedido não encontrado."));
     order.markAsPaid();
     orderRepository.save(order);

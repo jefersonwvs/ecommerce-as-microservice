@@ -3,7 +3,7 @@ package dev.jefersonwvs.mspayment.messaging;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public record ApprovedPaymentEvent(
+public record PaymentApprovedEvent(
   String eventId,
   Long orderId,
   Long paymentId,

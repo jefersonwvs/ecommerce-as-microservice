@@ -2,9 +2,9 @@ package dev.jefersonwvs.mspayment.service;
 
 import dev.jefersonwvs.mspayment.dto.PaymentWebhookRequest;
 import dev.jefersonwvs.mspayment.entity.Payment;
-import dev.jefersonwvs.mspayment.messaging.ApprovedPaymentEvent;
-import dev.jefersonwvs.mspayment.messaging.ApprovedPaymentProducer;
 import dev.jefersonwvs.mspayment.messaging.OrderCreatedEvent;
+import dev.jefersonwvs.mspayment.messaging.PaymentApprovedEvent;
+import dev.jefersonwvs.mspayment.messaging.PaymentApprovedProducer;
 import dev.jefersonwvs.mspayment.repository.PaymentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +19,11 @@ public class PaymentService {
   private static final Logger logger = LoggerFactory.getLogger(PaymentService.class);
 
   private final PaymentRepository paymentRepository;
-  private final ApprovedPaymentProducer approvedPaymentProducer;
+  private final PaymentApprovedProducer paymentApprovedProducer;
 
-  public PaymentService(PaymentRepository paymentRepository, ApprovedPaymentProducer approvedPaymentProducer) {
+  public PaymentService(PaymentRepository paymentRepository, PaymentApprovedProducer paymentApprovedProducer) {
     this.paymentRepository = paymentRepository;
-    this.approvedPaymentProducer = approvedPaymentProducer;
+    this.paymentApprovedProducer = paymentApprovedProducer;
   }
 
   @Transactional
@@ -40,7 +40,7 @@ public class PaymentService {
     paymentRepository.save(entity);
     logger.info("Payment approved: paymentId={}, orderId={}", entity.getId(), entity.getOrderId());
 
-    approvedPaymentProducer.publishApprovedPayment(new ApprovedPaymentEvent(UUID.randomUUID().toString(), entity.getOrderId(), entity.getId(), entity.getAmount(), request.processedAt()));
+    paymentApprovedProducer.publishPaymentApproved(new PaymentApprovedEvent(UUID.randomUUID().toString(), entity.getOrderId(), entity.getId(), entity.getAmount(), request.processedAt()));
     logger.info("Published approved payment: paymentId={}, orderId={}", entity.getId(), entity.getOrderId());
   }
 }

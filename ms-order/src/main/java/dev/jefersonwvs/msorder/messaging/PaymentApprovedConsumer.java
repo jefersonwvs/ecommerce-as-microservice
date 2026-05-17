@@ -7,19 +7,19 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ApprovedPaymentConsumer {
+public class PaymentApprovedConsumer {
 
-  private static final Logger logger = LoggerFactory.getLogger(ApprovedPaymentConsumer.class);
+  private static final Logger logger = LoggerFactory.getLogger(PaymentApprovedConsumer.class);
 
   private final OrderService orderService;
 
-  public ApprovedPaymentConsumer(OrderService orderService) {
+  public PaymentApprovedConsumer(OrderService orderService) {
     this.orderService = orderService;
   }
 
-  @RabbitListener(queues = MessagingConfig.APPROVED_PAYMENT_QUEUE)
-  public void consume(ApprovedPaymentEvent event) {
-    logger.info("Received approved-payment event: orderId={}, paymentId={}", event.orderId(), event.paymentId());
+  @RabbitListener(queues = MessagingConfig.ORDER_PAYMENT_APPROVED_QUEUE)
+  public void consume(PaymentApprovedEvent event) {
+    logger.info("Received payment-approved event: orderId={}, paymentId={}", event.orderId(), event.paymentId());
     var payment = orderService.approveOrderPayment(event);
     logger.info("Order payment approved: orderId={} paymentId={}", event.orderId(), payment.id());
   }
