@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run app" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+    <module name="ms-payment.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="dev.jefersonwvs.mspayment.MSPaymentApplication" />
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Start DB" run_configuration_type="docker-deploy" />
+    </method>
+  </configuration>
+</component>
