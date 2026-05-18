@@ -19,10 +19,7 @@ public class PaymentApprovedConsumer {
 
   @RabbitListener(queues = MessagingConfig.NOTIFICATION_PAYMENT_APPROVED_QUEUE)
   public void consume(PaymentApprovedEvent event) {
-    logger.info(
-      "Received payment-approved event. orderId={}",
-      event.orderId());
+    logger.info("Received payment-approved event. orderId={}", event.orderId());
     emailService.sendApprovedPaymentEmail("jeferson@mail.com", event.orderId());
   }
-
 }

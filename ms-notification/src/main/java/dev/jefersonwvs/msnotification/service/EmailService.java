@@ -23,12 +23,12 @@ public class EmailService {
     message.setSubject("Approved Payment");
 
     message.setText(
-      """
+        """
         Your payment has been approved.
-        
+
         Order ID: %s
         """
-        .formatted(orderId));
+            .formatted(orderId));
 
     mailSender.send(message);
 

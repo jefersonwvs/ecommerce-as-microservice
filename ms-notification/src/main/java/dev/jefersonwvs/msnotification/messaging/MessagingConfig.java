@@ -16,13 +16,11 @@ public class MessagingConfig {
 
   // ROUTING KEYS
 
-  static final String PAYMENT_APPROVED_EVENT =
-    "payment.approved";
+  static final String PAYMENT_APPROVED_EVENT = "payment.approved";
 
   // QUEUES
 
-  static final String NOTIFICATION_PAYMENT_APPROVED_QUEUE =
-    "notification.payment-approved";
+  static final String NOTIFICATION_PAYMENT_APPROVED_QUEUE = "notification.payment-approved";
 
   @Bean
   public TopicExchange topicExchange() {
@@ -31,16 +29,14 @@ public class MessagingConfig {
 
   @Bean
   public Queue notificationPaymentApprovedQueue() {
-    return new Queue(
-      NOTIFICATION_PAYMENT_APPROVED_QUEUE);
+    return new Queue(NOTIFICATION_PAYMENT_APPROVED_QUEUE);
   }
 
   @Bean
   public Binding notificationPaymentApprovedBinding() {
-    return BindingBuilder
-      .bind(notificationPaymentApprovedQueue())
-      .to(topicExchange())
-      .with(PAYMENT_APPROVED_EVENT);
+    return BindingBuilder.bind(notificationPaymentApprovedQueue())
+        .to(topicExchange())
+        .with(PAYMENT_APPROVED_EVENT);
   }
 
   @Bean
@@ -48,4 +44,3 @@ public class MessagingConfig {
     return new JacksonJsonMessageConverter();
   }
 }
-
