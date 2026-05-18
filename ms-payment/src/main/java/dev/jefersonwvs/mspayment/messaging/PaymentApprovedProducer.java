@@ -13,7 +13,7 @@ public class PaymentApprovedProducer {
   }
 
   public void publishPaymentApproved(PaymentApprovedEvent event) {
-    rabbitTemplate.convertAndSend(MessagingConfig.EXCHANGE, MessagingConfig.PAYMENT_APPROVED_EVENT, event);
+    rabbitTemplate.convertAndSend(
+        MessagingConfig.EXCHANGE, MessagingConfig.PAYMENT_APPROVED_EVENT, event);
   }
-
 }

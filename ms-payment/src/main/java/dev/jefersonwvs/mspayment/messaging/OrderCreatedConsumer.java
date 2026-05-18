@@ -23,5 +23,4 @@ public class OrderCreatedConsumer {
     var payment = paymentService.createPendingPayment(event);
     logger.info("Payment created: paymentId={}, orderId={}", payment.getId(), event.orderId());
   }
-
 }

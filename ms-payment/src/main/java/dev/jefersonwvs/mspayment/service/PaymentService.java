@@ -6,12 +6,11 @@ import dev.jefersonwvs.mspayment.messaging.OrderCreatedEvent;
 import dev.jefersonwvs.mspayment.messaging.PaymentApprovedEvent;
 import dev.jefersonwvs.mspayment.messaging.PaymentApprovedProducer;
 import dev.jefersonwvs.mspayment.repository.PaymentRepository;
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 @Service
 public class PaymentService {

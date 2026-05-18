@@ -20,5 +20,4 @@ public class PaymentWebhookController {
   public void handlePayment(@RequestBody PaymentWebhookRequest request) {
     paymentService.approvePayment(request);
   }
-
 }
