@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run app" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="ms-order.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="dev.jefersonwvs.msorder.MSOrderApplication" />
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Start DB" run_configuration_type="docker-deploy" />
+    </method>
+  </configuration>
+</component>
