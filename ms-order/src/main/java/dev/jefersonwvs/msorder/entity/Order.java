@@ -1,11 +1,10 @@
 package dev.jefersonwvs.msorder.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import java.math.BigDecimal;
 import java.time.Instant;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "tbl_order")
@@ -29,9 +28,7 @@ public class Order {
   @CreationTimestamp
   private Instant createdAt;
 
-  @Column
-  @UpdateTimestamp
-  private Instant updatedAt;
+  @Column @UpdateTimestamp private Instant updatedAt;
 
   protected Order() {
     // JPA
@@ -78,11 +75,15 @@ public class Order {
 
   @Override
   public String toString() {
-    return "Order{" +
-      "id=" + id +
-      ", customerId=" + customerId +
-      ", totalAmount=" + totalAmount +
-      ", status=" + status +
-      '}';
+    return "Order{"
+        + "id="
+        + id
+        + ", customerId="
+        + customerId
+        + ", totalAmount="
+        + totalAmount
+        + ", status="
+        + status
+        + '}';
   }
 }

@@ -3,17 +3,16 @@ package dev.jefersonwvs.msorder.service;
 import dev.jefersonwvs.msorder.dto.CreateOrderRequest;
 import dev.jefersonwvs.msorder.dto.OrderResponse;
 import dev.jefersonwvs.msorder.entity.Order;
-import dev.jefersonwvs.msorder.messaging.PaymentApprovedEvent;
 import dev.jefersonwvs.msorder.messaging.OrderCreatedEvent;
 import dev.jefersonwvs.msorder.messaging.OrderEventProducer;
+import dev.jefersonwvs.msorder.messaging.PaymentApprovedEvent;
 import dev.jefersonwvs.msorder.repository.OrderRepository;
+import java.time.Instant;
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.Instant;
-import java.util.UUID;
 
 @Service
 public class OrderService {
@@ -30,45 +29,39 @@ public class OrderService {
 
   @Transactional
   public OrderResponse createOrder(CreateOrderRequest orderRequest) {
-    var entity = new Order(
-      orderRequest.customerId(),
-      orderRequest.totalAmount()
-    );
+    var entity = new Order(orderRequest.customerId(), orderRequest.totalAmount());
 
     entity = orderRepository.save(entity);
-    logger.info("Order created: orderId={}, totalAmount={}", entity.getId(), entity.getTotalAmount());
+    logger.info(
+        "Order created: orderId={}, totalAmount={}", entity.getId(), entity.getTotalAmount());
 
     orderEventProducer.publishOrderCreated(
-      new OrderCreatedEvent(
-        UUID.randomUUID().toString(),
-        entity.getId(),
-        entity.getTotalAmount(),
-        Instant.now()
-      )
-    );
+        new OrderCreatedEvent(
+            UUID.randomUUID().toString(), entity.getId(), entity.getTotalAmount(), Instant.now()));
     logger.info("Published order-created event: orderId={}", entity.getId());
 
     return new OrderResponse(
-      entity.getId(),
-      entity.getCustomerId(),
-      entity.getTotalAmount(),
-      entity.getStatus(),
-      entity.getCreatedAt()
-    );
+        entity.getId(),
+        entity.getCustomerId(),
+        entity.getTotalAmount(),
+        entity.getStatus(),
+        entity.getCreatedAt());
   }
 
   @Transactional
   public OrderResponse approveOrderPayment(PaymentApprovedEvent event) {
-    var order = orderRepository.findById(event.orderId()).orElseThrow(() -> new RuntimeException("Pedido não encontrado."));
+    var order =
+        orderRepository
+            .findById(event.orderId())
+            .orElseThrow(() -> new RuntimeException("Pedido não encontrado."));
     order.markAsPaid();
     orderRepository.save(order);
 
     return new OrderResponse(
-      order.getId(),
-      order.getCustomerId(),
-      order.getTotalAmount(),
-      order.getStatus(),
-      order.getCreatedAt()
-    );
+        order.getId(),
+        order.getCustomerId(),
+        order.getTotalAmount(),
+        order.getStatus(),
+        order.getCreatedAt());
   }
 }

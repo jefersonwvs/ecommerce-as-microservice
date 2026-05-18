@@ -13,7 +13,7 @@ public class OrderEventProducer {
   }
 
   public void publishOrderCreated(OrderCreatedEvent orderCreatedEvent) {
-    rabbitTemplate.convertAndSend(MessagingConfig.EXCHANGE, MessagingConfig.ORDER_CREATED_EVENT, orderCreatedEvent);
+    rabbitTemplate.convertAndSend(
+        MessagingConfig.EXCHANGE, MessagingConfig.ORDER_CREATED_EVENT, orderCreatedEvent);
   }
-
 }

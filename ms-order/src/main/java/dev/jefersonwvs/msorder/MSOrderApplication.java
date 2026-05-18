@@ -9,5 +9,4 @@ public class MSOrderApplication {
   public static void main(String[] args) {
     SpringApplication.run(MSOrderApplication.class, args);
   }
-
 }
