@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run app" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+    <module name="ms-notification.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="dev.jefersonwvs.msnotification.MSNotificationApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Start mail server" run_configuration_type="docker-deploy" />
+    </method>
+  </configuration>
+</component>
