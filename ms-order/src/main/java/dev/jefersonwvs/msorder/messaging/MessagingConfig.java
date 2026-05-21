@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MessagingConfig {
 
-  static final String EXCHANGE = "ecommerce.exchange";
+  public static final String EXCHANGE = "ecommerce.exchange";
 
   // ROUTING KEYS
 
