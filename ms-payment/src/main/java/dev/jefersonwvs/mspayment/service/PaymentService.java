@@ -35,10 +35,20 @@ public class PaymentService {
   }
 
   @Transactional
-  public Payment createPendingPayment(OrderCreatedEvent event) {
-    var entity = new Payment(event.orderId(), event.totalAmount());
-    paymentRepository.save(entity);
-    return entity;
+  public void createPendingPayment(OrderCreatedEvent event) {
+    var existingPayment = paymentRepository.findByOrderId(event.orderId()).orElse(null);
+    if (existingPayment != null) {
+      logger.info(
+          "Pending payment already exists: paymentId={}, orderId={}",
+          existingPayment.getId(),
+          event.orderId());
+      return;
+    }
+
+    var newPayment = new Payment(event.orderId(), event.totalAmount());
+    paymentRepository.save(newPayment);
+    logger.info(
+        "Pending payment created: paymentId={}, orderId={}", newPayment.getId(), event.orderId());
   }
 
   @Transactional

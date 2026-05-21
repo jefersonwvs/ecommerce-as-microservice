@@ -20,7 +20,6 @@ public class OrderCreatedConsumer {
   @RabbitListener(queues = MessagingConfig.PAYMENT_ORDER_CREATED_QUEUE)
   public void consume(OrderCreatedEvent event) {
     logger.info("Received order-created event: orderId={}", event.orderId());
-    var payment = paymentService.createPendingPayment(event);
-    logger.info("Payment created: paymentId={}, orderId={}", payment.getId(), event.orderId());
+    paymentService.createPendingPayment(event);
   }
 }

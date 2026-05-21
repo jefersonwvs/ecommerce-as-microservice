@@ -39,7 +39,6 @@ public class Payment {
     this.orderId = orderId;
     this.amount = amount;
     this.status = PaymentStatus.PENDING;
-    this.createdAt = Instant.now();
   }
 
   public void approve() {
