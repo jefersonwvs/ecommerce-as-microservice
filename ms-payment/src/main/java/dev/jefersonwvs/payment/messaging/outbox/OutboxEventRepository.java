@@ -1,4 +1,4 @@
-package dev.jefersonwvs.mspayment.messaging.outbox;
+package dev.jefersonwvs.payment.messaging.outbox;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;

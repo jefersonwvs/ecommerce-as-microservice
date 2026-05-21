@@ -1,4 +1,4 @@
-package dev.jefersonwvs.mspayment.messaging;
+package dev.jefersonwvs.payment.messaging;
 
 import java.math.BigDecimal;
 import java.time.Instant;

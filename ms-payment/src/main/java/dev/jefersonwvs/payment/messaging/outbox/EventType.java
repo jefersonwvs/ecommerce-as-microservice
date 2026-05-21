@@ -1,4 +1,4 @@
-package dev.jefersonwvs.mspayment.messaging.outbox;
+package dev.jefersonwvs.payment.messaging.outbox;
 
 public enum EventType {
   ORDER_CREATED("order.created"),

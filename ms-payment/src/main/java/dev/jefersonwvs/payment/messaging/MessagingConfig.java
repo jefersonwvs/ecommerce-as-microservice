@@ -1,4 +1,4 @@
-package dev.jefersonwvs.mspayment.messaging;
+package dev.jefersonwvs.payment.messaging;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

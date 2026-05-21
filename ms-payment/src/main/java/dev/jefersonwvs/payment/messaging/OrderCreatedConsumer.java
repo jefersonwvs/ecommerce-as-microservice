@@ -1,6 +1,6 @@
-package dev.jefersonwvs.mspayment.messaging;
+package dev.jefersonwvs.payment.messaging;
 
-import dev.jefersonwvs.mspayment.service.PaymentService;
+import dev.jefersonwvs.payment.service.PaymentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

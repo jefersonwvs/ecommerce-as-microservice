@@ -1,6 +1,6 @@
-package dev.jefersonwvs.mspayment.repository;
+package dev.jefersonwvs.payment.repository;
 
-import dev.jefersonwvs.mspayment.entity.Payment;
+import dev.jefersonwvs.payment.entity.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

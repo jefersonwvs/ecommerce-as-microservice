@@ -1,4 +1,4 @@
-package dev.jefersonwvs.mspayment.messaging.outbox;
+package dev.jefersonwvs.payment.messaging.outbox;
 
 import jakarta.persistence.*;
 import java.time.Instant;

@@ -1,4 +1,4 @@
-package dev.jefersonwvs.mspayment.dto;
+package dev.jefersonwvs.payment.dto;
 
 import java.math.BigDecimal;
 import java.time.Instant;

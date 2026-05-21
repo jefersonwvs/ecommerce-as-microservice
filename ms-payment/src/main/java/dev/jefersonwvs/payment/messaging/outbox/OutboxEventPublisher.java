@@ -1,7 +1,7 @@
-package dev.jefersonwvs.mspayment.messaging.outbox;
+package dev.jefersonwvs.payment.messaging.outbox;
 
-import dev.jefersonwvs.mspayment.messaging.MessagingConfig;
-import dev.jefersonwvs.mspayment.messaging.OrderCreatedEvent;
+import dev.jefersonwvs.payment.messaging.MessagingConfig;
+import dev.jefersonwvs.payment.messaging.OrderCreatedEvent;
 import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,15 +11,15 @@ import org.springframework.stereotype.Component;
 import tools.jackson.databind.ObjectMapper;
 
 @Component
-public class OutboxPublisher {
+public class OutboxEventPublisher {
 
-  private static final Logger logger = LoggerFactory.getLogger(OutboxPublisher.class);
+  private static final Logger logger = LoggerFactory.getLogger(OutboxEventPublisher.class);
 
   private final OutboxEventRepository outboxEventRepository;
   private final RabbitTemplate rabbitTemplate;
   private final ObjectMapper objectMapper;
 
-  public OutboxPublisher(
+  public OutboxEventPublisher(
       OutboxEventRepository outboxEventRepository,
       RabbitTemplate rabbitTemplate,
       ObjectMapper objectMapper) {

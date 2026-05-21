@@ -1,6 +1,5 @@
-package dev.jefersonwvs.mspayment.entity;
+package dev.jefersonwvs.payment.entity;
 
-import dev.jefersonwvs.mspayment.model.PaymentStatus;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;

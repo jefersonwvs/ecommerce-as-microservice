@@ -1,7 +1,7 @@
-package dev.jefersonwvs.mspayment.controller;
+package dev.jefersonwvs.payment.controller;
 
-import dev.jefersonwvs.mspayment.dto.PaymentWebhookRequest;
-import dev.jefersonwvs.mspayment.service.PaymentService;
+import dev.jefersonwvs.payment.dto.PaymentWebhookRequest;
+import dev.jefersonwvs.payment.service.PaymentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

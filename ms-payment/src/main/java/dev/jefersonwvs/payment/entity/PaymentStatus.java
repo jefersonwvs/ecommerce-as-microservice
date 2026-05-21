@@ -1,4 +1,4 @@
-package dev.jefersonwvs.mspayment.model;
+package dev.jefersonwvs.payment.entity;
 
 public enum PaymentStatus {
   PENDING,

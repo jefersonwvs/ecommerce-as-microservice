@@ -1,13 +1,13 @@
-package dev.jefersonwvs.mspayment.service;
+package dev.jefersonwvs.payment.service;
 
-import dev.jefersonwvs.mspayment.dto.PaymentWebhookRequest;
-import dev.jefersonwvs.mspayment.entity.Payment;
-import dev.jefersonwvs.mspayment.messaging.OrderCreatedEvent;
-import dev.jefersonwvs.mspayment.messaging.PaymentApprovedEvent;
-import dev.jefersonwvs.mspayment.messaging.outbox.EventType;
-import dev.jefersonwvs.mspayment.messaging.outbox.OutboxEvent;
-import dev.jefersonwvs.mspayment.messaging.outbox.OutboxEventRepository;
-import dev.jefersonwvs.mspayment.repository.PaymentRepository;
+import dev.jefersonwvs.payment.dto.PaymentWebhookRequest;
+import dev.jefersonwvs.payment.entity.Payment;
+import dev.jefersonwvs.payment.messaging.OrderCreatedEvent;
+import dev.jefersonwvs.payment.messaging.PaymentApprovedEvent;
+import dev.jefersonwvs.payment.messaging.outbox.EventType;
+import dev.jefersonwvs.payment.messaging.outbox.OutboxEvent;
+import dev.jefersonwvs.payment.messaging.outbox.OutboxEventRepository;
+import dev.jefersonwvs.payment.repository.PaymentRepository;
 import java.time.Instant;
 import java.util.UUID;
 import org.slf4j.Logger;
