@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class MessagingConfig {
+public class RabbitMQConfig {
 
   public static final String EXCHANGE = "ecommerce.exchange";
 

@@ -17,7 +17,7 @@ public class OrderCreatedConsumer {
     this.paymentService = paymentService;
   }
 
-  @RabbitListener(queues = MessagingConfig.PAYMENT_ORDER_CREATED_QUEUE)
+  @RabbitListener(queues = RabbitMQConfig.PAYMENT_ORDER_CREATED_QUEUE)
   public void consume(OrderCreatedEvent event) {
     logger.info("Received order-created event: orderId={}", event.orderId());
     paymentService.createPendingPayment(event);

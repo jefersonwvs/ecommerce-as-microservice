@@ -1,7 +1,7 @@
 package dev.jefersonwvs.payment.messaging.outbox;
 
-import dev.jefersonwvs.payment.messaging.MessagingConfig;
-import dev.jefersonwvs.payment.messaging.OrderCreatedEvent;
+import dev.jefersonwvs.payment.messaging.RabbitMQConfig;
+
 import java.time.Instant;
 
 import dev.jefersonwvs.payment.messaging.PaymentApprovedEvent;
@@ -37,7 +37,7 @@ public class OutboxEventPublisher {
     for (var event : events) {
       try {
         rabbitTemplate.convertAndSend(
-            MessagingConfig.EXCHANGE,
+            RabbitMQConfig.EXCHANGE,
             event.getRoutingKey(),
             objectMapper.readValue(event.getPayload(), PaymentApprovedEvent.class));
 
