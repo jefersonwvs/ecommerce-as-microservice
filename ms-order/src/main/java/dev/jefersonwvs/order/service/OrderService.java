@@ -5,7 +5,6 @@ import dev.jefersonwvs.order.dto.OrderResponse;
 import dev.jefersonwvs.order.entity.Order;
 import dev.jefersonwvs.order.messaging.OrderCreatedEvent;
 import dev.jefersonwvs.order.messaging.PaymentApprovedEvent;
-import dev.jefersonwvs.order.messaging.outbox.EventType;
 import dev.jefersonwvs.order.messaging.outbox.OutboxEvent;
 import dev.jefersonwvs.order.messaging.outbox.OutboxEventRepository;
 import dev.jefersonwvs.order.repository.OrderRepository;
@@ -48,7 +47,7 @@ public class OrderService {
         new OrderCreatedEvent(eventId, order.getId(), order.getTotalAmount(), eventCreatedAt);
 
     var outboxEvent =
-        new OutboxEvent(eventId, EventType.ORDER_CREATED, objectMapper.writeValueAsString(event));
+        new OutboxEvent(eventId, "order.created", objectMapper.writeValueAsString(event));
     outboxEventRepository.save(outboxEvent);
 
     logger.info("Outbox event created: {}", objectMapper.writeValueAsString(outboxEvent));

@@ -4,7 +4,6 @@ import dev.jefersonwvs.payment.dto.PaymentWebhookRequest;
 import dev.jefersonwvs.payment.entity.Payment;
 import dev.jefersonwvs.payment.messaging.OrderCreatedEvent;
 import dev.jefersonwvs.payment.messaging.PaymentApprovedEvent;
-import dev.jefersonwvs.payment.messaging.outbox.EventType;
 import dev.jefersonwvs.payment.messaging.outbox.OutboxEvent;
 import dev.jefersonwvs.payment.messaging.outbox.OutboxEventRepository;
 import dev.jefersonwvs.payment.repository.PaymentRepository;
@@ -69,8 +68,7 @@ public class PaymentService {
             eventId, payment.getOrderId(), payment.getId(), payment.getAmount(), eventCreatedAt);
 
     var outboxEvent =
-        new OutboxEvent(
-            eventId, EventType.PAYMENT_APPROVED, objectMapper.writeValueAsString(event));
+        new OutboxEvent(eventId, "payment.approved", objectMapper.writeValueAsString(event));
     outboxEventRepository.save(outboxEvent);
 
     logger.info("Outbox event created: {}", objectMapper.writeValueAsString(outboxEvent));

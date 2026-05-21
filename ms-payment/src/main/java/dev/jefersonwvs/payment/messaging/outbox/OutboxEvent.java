@@ -15,8 +15,7 @@ public class OutboxEvent {
   private String eventId;
 
   @Column(nullable = false, updatable = false)
-  @Enumerated(EnumType.STRING)
-  private EventType eventType;
+  private String routingKey;
 
   @Column(columnDefinition = "TEXT", nullable = false, updatable = false)
   private String payload;
@@ -28,9 +27,9 @@ public class OutboxEvent {
 
   protected OutboxEvent() {}
 
-  public OutboxEvent(String eventId, EventType eventType, String payload) {
+  public OutboxEvent(String eventId, String routingKey, String payload) {
     this.eventId = eventId;
-    this.eventType = eventType;
+    this.routingKey = routingKey;
     this.payload = payload;
     this.createdAt = Instant.now();
   }
@@ -43,8 +42,8 @@ public class OutboxEvent {
     return eventId;
   }
 
-  public EventType getEventType() {
-    return eventType;
+  public String getRoutingKey() {
+    return routingKey;
   }
 
   public String getPayload() {
@@ -76,8 +75,12 @@ public class OutboxEvent {
         + ", eventId='"
         + eventId
         + '\''
-        + ", eventType="
-        + eventType
+        + ", routingKey='"
+        + routingKey
+        + '\''
+        + ", payload='"
+        + payload
+        + '\''
         + ", createdAt="
         + createdAt
         + ", publishedAt="

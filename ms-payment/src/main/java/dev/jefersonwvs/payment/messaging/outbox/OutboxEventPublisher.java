@@ -3,6 +3,8 @@ package dev.jefersonwvs.payment.messaging.outbox;
 import dev.jefersonwvs.payment.messaging.MessagingConfig;
 import dev.jefersonwvs.payment.messaging.OrderCreatedEvent;
 import java.time.Instant;
+
+import dev.jefersonwvs.payment.messaging.PaymentApprovedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -36,8 +38,8 @@ public class OutboxEventPublisher {
       try {
         rabbitTemplate.convertAndSend(
             MessagingConfig.EXCHANGE,
-            event.getEventType().toString(),
-            objectMapper.readValue(event.getPayload(), OrderCreatedEvent.class));
+            event.getRoutingKey(),
+            objectMapper.readValue(event.getPayload(), PaymentApprovedEvent.class));
 
         event.setPublishedAt(Instant.now());
         outboxEventRepository.save(event);
