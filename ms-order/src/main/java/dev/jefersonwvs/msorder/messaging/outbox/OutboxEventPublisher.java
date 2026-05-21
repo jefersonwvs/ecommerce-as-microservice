@@ -11,15 +11,15 @@ import org.springframework.stereotype.Component;
 import tools.jackson.databind.ObjectMapper;
 
 @Component
-public class OutboxPublisher {
+public class OutboxEventPublisher {
 
-  private static final Logger logger = LoggerFactory.getLogger(OutboxPublisher.class);
+  private static final Logger logger = LoggerFactory.getLogger(OutboxEventPublisher.class);
 
   private final OutboxEventRepository outboxEventRepository;
   private final RabbitTemplate rabbitTemplate;
   private final ObjectMapper objectMapper;
 
-  public OutboxPublisher(
+  public OutboxEventPublisher(
       OutboxEventRepository outboxEventRepository,
       RabbitTemplate rabbitTemplate,
       ObjectMapper objectMapper) {
