@@ -1,6 +1,6 @@
-package dev.jefersonwvs.msnotification.messaging;
+package dev.jefersonwvs.notification.messaging;
 
-import dev.jefersonwvs.msnotification.service.EmailService;
+import dev.jefersonwvs.notification.service.EmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -17,7 +17,7 @@ public class PaymentApprovedConsumer {
     this.emailService = emailService;
   }
 
-  @RabbitListener(queues = MessagingConfig.NOTIFICATION_PAYMENT_APPROVED_QUEUE)
+  @RabbitListener(queues = RabbitMQConfig.NOTIFICATION_PAYMENT_APPROVED_QUEUE)
   public void consume(PaymentApprovedEvent event) {
     logger.info("Received payment-approved event. orderId={}", event.orderId());
     emailService.sendApprovedPaymentEmail("jeferson@mail.com", event.orderId());

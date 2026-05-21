@@ -1,4 +1,4 @@
-package dev.jefersonwvs.msnotification.messaging;
+package dev.jefersonwvs.notification.messaging;
 
 import java.math.BigDecimal;
 import java.time.Instant;
