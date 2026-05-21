@@ -1,6 +1,6 @@
 package dev.jefersonwvs.order.messaging.outbox;
 
-import dev.jefersonwvs.order.messaging.MessagingConfig;
+import dev.jefersonwvs.order.messaging.RabbitMQConfig;
 import dev.jefersonwvs.order.messaging.OrderCreatedEvent;
 import java.time.Instant;
 import org.slf4j.Logger;
@@ -35,7 +35,7 @@ public class OutboxEventPublisher {
     for (var event : events) {
       try {
         rabbitTemplate.convertAndSend(
-            MessagingConfig.EXCHANGE,
+            RabbitMQConfig.EXCHANGE,
             event.getEventType().toString(),
             objectMapper.readValue(event.getPayload(), OrderCreatedEvent.class));
 

@@ -17,7 +17,7 @@ public class PaymentApprovedConsumer {
     this.orderService = orderService;
   }
 
-  @RabbitListener(queues = MessagingConfig.ORDER_PAYMENT_APPROVED_QUEUE)
+  @RabbitListener(queues = RabbitMQConfig.ORDER_PAYMENT_APPROVED_QUEUE)
   public void consume(PaymentApprovedEvent event) {
     logger.info(
         "Received payment-approved event: orderId={}, paymentId={}",
