@@ -29,9 +29,7 @@ public class Payment {
   @CreationTimestamp
   private Instant createdAt;
 
-  @Column
-  @UpdateTimestamp
-  private Instant updatedAt;
+  @Column @UpdateTimestamp private Instant updatedAt;
 
   protected Payment() {
     // JPA
@@ -78,11 +76,15 @@ public class Payment {
 
   @Override
   public String toString() {
-    return "Payment{" +
-      "id=" + id +
-      ", orderId=" + orderId +
-      ", totalAmount=" + amount +
-      ", status=" + status +
-      '}';
+    return "Payment{"
+        + "id="
+        + id
+        + ", orderId="
+        + orderId
+        + ", totalAmount="
+        + amount
+        + ", status="
+        + status
+        + '}';
   }
 }

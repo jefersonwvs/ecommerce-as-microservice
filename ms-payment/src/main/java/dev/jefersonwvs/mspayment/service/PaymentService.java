@@ -4,13 +4,17 @@ import dev.jefersonwvs.mspayment.dto.PaymentWebhookRequest;
 import dev.jefersonwvs.mspayment.entity.Payment;
 import dev.jefersonwvs.mspayment.messaging.OrderCreatedEvent;
 import dev.jefersonwvs.mspayment.messaging.PaymentApprovedEvent;
-import dev.jefersonwvs.mspayment.messaging.PaymentApprovedProducer;
+import dev.jefersonwvs.mspayment.messaging.outbox.EventType;
+import dev.jefersonwvs.mspayment.messaging.outbox.OutboxEvent;
+import dev.jefersonwvs.mspayment.messaging.outbox.OutboxEventRepository;
 import dev.jefersonwvs.mspayment.repository.PaymentRepository;
+import java.time.Instant;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.databind.ObjectMapper;
 
 @Service
 public class PaymentService {
@@ -18,11 +22,16 @@ public class PaymentService {
   private static final Logger logger = LoggerFactory.getLogger(PaymentService.class);
 
   private final PaymentRepository paymentRepository;
-  private final PaymentApprovedProducer paymentApprovedProducer;
+  private final OutboxEventRepository outboxEventRepository;
+  private final ObjectMapper objectMapper;
 
-  public PaymentService(PaymentRepository paymentRepository, PaymentApprovedProducer paymentApprovedProducer) {
+  public PaymentService(
+      PaymentRepository paymentRepository,
+      OutboxEventRepository outboxEventRepository,
+      ObjectMapper objectMapper) {
     this.paymentRepository = paymentRepository;
-    this.paymentApprovedProducer = paymentApprovedProducer;
+    this.outboxEventRepository = outboxEventRepository;
+    this.objectMapper = objectMapper;
   }
 
   @Transactional
@@ -34,12 +43,26 @@ public class PaymentService {
 
   @Transactional
   public void approvePayment(PaymentWebhookRequest request) {
-    var entity = paymentRepository.findById(request.paymentId()).orElseThrow(() -> new RuntimeException("Pagamento não encontrado."));
-    entity.approve();
-    paymentRepository.save(entity);
-    logger.info("Payment approved: paymentId={}, orderId={}", entity.getId(), entity.getOrderId());
+    var payment =
+        paymentRepository
+            .findById(request.paymentId())
+            .orElseThrow(() -> new RuntimeException("Pagamento não encontrado."));
+    payment.approve();
+    paymentRepository.save(payment);
+    logger.info(
+        "Payment approved: paymentId={}, orderId={}", payment.getId(), payment.getOrderId());
 
-    paymentApprovedProducer.publishPaymentApproved(new PaymentApprovedEvent(UUID.randomUUID().toString(), entity.getOrderId(), entity.getId(), entity.getAmount(), request.processedAt()));
-    logger.info("Published approved payment: paymentId={}, orderId={}", entity.getId(), entity.getOrderId());
+    var eventId = UUID.randomUUID().toString();
+    var eventCreatedAt = Instant.now();
+    var event =
+        new PaymentApprovedEvent(
+            eventId, payment.getOrderId(), payment.getId(), payment.getAmount(), eventCreatedAt);
+
+    var outboxEvent =
+        new OutboxEvent(
+            eventId, EventType.PAYMENT_APPROVED, objectMapper.writeValueAsString(event));
+    outboxEventRepository.save(outboxEvent);
+
+    logger.info("Outbox event created: {}", objectMapper.writeValueAsString(outboxEvent));
   }
 }
