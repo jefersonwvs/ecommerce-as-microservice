@@ -1,14 +1,14 @@
-package dev.jefersonwvs.msorder.service;
+package dev.jefersonwvs.order.service;
 
-import dev.jefersonwvs.msorder.dto.CreateOrderRequest;
-import dev.jefersonwvs.msorder.dto.OrderResponse;
-import dev.jefersonwvs.msorder.entity.Order;
-import dev.jefersonwvs.msorder.messaging.OrderCreatedEvent;
-import dev.jefersonwvs.msorder.messaging.PaymentApprovedEvent;
-import dev.jefersonwvs.msorder.messaging.outbox.EventType;
-import dev.jefersonwvs.msorder.messaging.outbox.OutboxEvent;
-import dev.jefersonwvs.msorder.messaging.outbox.OutboxEventRepository;
-import dev.jefersonwvs.msorder.repository.OrderRepository;
+import dev.jefersonwvs.order.dto.CreateOrderRequest;
+import dev.jefersonwvs.order.dto.OrderResponse;
+import dev.jefersonwvs.order.entity.Order;
+import dev.jefersonwvs.order.messaging.OrderCreatedEvent;
+import dev.jefersonwvs.order.messaging.PaymentApprovedEvent;
+import dev.jefersonwvs.order.messaging.outbox.EventType;
+import dev.jefersonwvs.order.messaging.outbox.OutboxEvent;
+import dev.jefersonwvs.order.messaging.outbox.OutboxEventRepository;
+import dev.jefersonwvs.order.repository.OrderRepository;
 import java.time.Instant;
 import java.util.UUID;
 import org.slf4j.Logger;

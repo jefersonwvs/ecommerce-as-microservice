@@ -1,6 +1,6 @@
-package dev.jefersonwvs.msorder.dto;
+package dev.jefersonwvs.order.dto;
 
-import dev.jefersonwvs.msorder.entity.OrderStatus;
+import dev.jefersonwvs.order.entity.OrderStatus;
 import java.math.BigDecimal;
 import java.time.Instant;
 

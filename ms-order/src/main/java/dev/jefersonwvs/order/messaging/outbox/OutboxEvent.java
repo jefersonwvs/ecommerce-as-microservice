@@ -1,4 +1,4 @@
-package dev.jefersonwvs.msorder.messaging.outbox;
+package dev.jefersonwvs.order.messaging.outbox;
 
 import jakarta.persistence.*;
 import java.time.Instant;

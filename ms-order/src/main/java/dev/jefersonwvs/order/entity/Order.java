@@ -1,4 +1,4 @@
-package dev.jefersonwvs.msorder.entity;
+package dev.jefersonwvs.order.entity;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;

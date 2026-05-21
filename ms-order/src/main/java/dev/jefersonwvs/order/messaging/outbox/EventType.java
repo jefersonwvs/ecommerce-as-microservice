@@ -1,4 +1,4 @@
-package dev.jefersonwvs.msorder.messaging.outbox;
+package dev.jefersonwvs.order.messaging.outbox;
 
 public enum EventType {
   ORDER_CREATED("order.created"),

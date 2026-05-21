@@ -1,4 +1,4 @@
-package dev.jefersonwvs.msorder.messaging;
+package dev.jefersonwvs.order.messaging;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

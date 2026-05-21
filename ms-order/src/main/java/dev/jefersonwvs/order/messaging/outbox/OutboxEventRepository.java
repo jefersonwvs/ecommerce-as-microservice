@@ -1,4 +1,4 @@
-package dev.jefersonwvs.msorder.messaging.outbox;
+package dev.jefersonwvs.order.messaging.outbox;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;

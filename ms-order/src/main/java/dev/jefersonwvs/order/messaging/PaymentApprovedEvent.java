@@ -1,4 +1,4 @@
-package dev.jefersonwvs.msorder.messaging;
+package dev.jefersonwvs.order.messaging;
 
 import java.math.BigDecimal;
 import java.time.Instant;

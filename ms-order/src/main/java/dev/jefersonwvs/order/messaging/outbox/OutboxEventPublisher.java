@@ -1,7 +1,7 @@
-package dev.jefersonwvs.msorder.messaging.outbox;
+package dev.jefersonwvs.order.messaging.outbox;
 
-import dev.jefersonwvs.msorder.messaging.MessagingConfig;
-import dev.jefersonwvs.msorder.messaging.OrderCreatedEvent;
+import dev.jefersonwvs.order.messaging.MessagingConfig;
+import dev.jefersonwvs.order.messaging.OrderCreatedEvent;
 import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

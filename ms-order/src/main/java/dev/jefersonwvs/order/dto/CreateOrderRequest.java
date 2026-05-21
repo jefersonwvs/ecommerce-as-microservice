@@ -1,4 +1,4 @@
-package dev.jefersonwvs.msorder.dto;
+package dev.jefersonwvs.order.dto;
 
 import java.math.BigDecimal;
 

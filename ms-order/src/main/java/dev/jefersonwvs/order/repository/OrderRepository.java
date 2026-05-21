@@ -1,6 +1,6 @@
-package dev.jefersonwvs.msorder.repository;
+package dev.jefersonwvs.order.repository;
 
-import dev.jefersonwvs.msorder.entity.Order;
+import dev.jefersonwvs.order.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
